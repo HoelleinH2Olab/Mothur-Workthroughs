@@ -1,0 +1,1046 @@
+Import fastq or gz files into a subdirectory of mother folder.  You should unzip the .gz files if you haven’t already.  This can be done from the Ubuntu command line:
+
+sdunn@gorilla:~/mothur/NBC16s$ gunzip *.fastq.gz
+
+Running mother on Reddy lab GORILLA
+Once you are logged in, enter the following
+cd mother
+./mothur
+
+Now you can run the “make files” command in the miseq sop.  Change the prefix to something more useful than ”stability”
+make.file(inputdir=/home/sdunn/mother/NBC16s/data, outputdir=/home/sdunn/mother/NBC16s/data, type=fastq, prefix=nbc16s)
+
+make.contigs(file=nbc16s.files)
+Make.contigs
+Group count:
+170812HA        76779
+170818CRA       839
+170818CRB       10585
+170818CRC       963
+170818FA        68707
+170818FB        104170
+170818FC        66006
+170818HB        66125
+170818HC        59610
+170818SHA       68914
+170818SHB       66854
+170818SHC       71827
+170818SOA       66492
+170818SOB       71884
+170818SOC       67923
+170818TA        76016
+170818TB        78327
+170818TC        61555
+170828CRA       21367
+170828CRB       51500
+170828CRC       21000
+170828FA        64341
+170828FB        71188
+170828FC        76562
+170828HA        77692
+170828HC        70532
+170828SHA       70681
+170828SHB       63691
+170828SHC       70721
+170828SOA       65957
+170828SOB       70755
+170828SOC       71341
+170828TA        77074
+170828TB        69584
+170828TC        70388
+170905CRA       9127
+170905CRB       10814
+170905CRC       7761
+170905FA        62202
+170905FB        67282
+170905FC        65764
+170905HA        71747
+170905HB        55237
+170905HC        73607
+170905SHA       61819
+170905SHB       65732
+170905SHC       67876
+170905SOA       62003
+170905SOB       67500
+170905SOC       63591
+170905TA        63636
+170905TB        64098
+170905TC        65520
+170915CRA       31597
+170915CRB       42046
+170915CRC       33486
+170915FA        76394
+170915FB        71764
+170915FC        70408
+170915HA        70617
+170915HB        77978
+170915HC        64263
+170915SHA       66275
+170915SHB       77556
+170915SHC       73081
+170915SOA       69258
+170915SOB       72025
+170915SOC       74163
+170915TA        73817
+170915TB        71494
+170915TC        71962
+180828HB        69835
+SDKC1   34348
+SDKC2   31782
+SDKC3   7290
+
+Total of all groups is 4504705
+
+It took 1305 secs to process 4504705 sequences.
+
+Output File Names:
+NBC16s/data/nbc16s.trim.contigs.fasta
+NBC16s/data/nbc16s.trim.contigs.qual
+NBC16s/data/nbc16s.scrap.contigs.fasta
+NBC16s/data/nbc16s.scrap.contigs.qual
+NBC16s/data/nbc16s.contigs.report
+NBC16s/data/nbc16s.contigs.groups
+
+
+mothur > set.dir(input=./NBC16s/data, output=./NBC16s/data)
+Mothur's directories:
+outputDir=/home/sdunn/mothur/NBC16s/data/
+inputDir=/home/sdunn/mothur/NBC16s/data/
+
+mothur > summary.seqs(fasta=nbc16s.trim.contigs.fasta)
+
+Using 56 processors.
+
+                Start   End     NBases  Ambigs  Polymer NumSeqs
+Minimum:        1       293     293     0       3       1
+2.5%-tile:      1       309     309     0       4       112618
+25%-tile:       1       310     310     0       4       1126177
+Median:         1       310     310     0       4       2252353
+75%-tile:       1       310     310     0       5       3378529
+97.5%-tile:     1       382     382     11      6       4392088
+Maximum:        1       602     602     279     301     4504705
+Mean:   1       315     315     1       5
+# of Seqs:      4504705
+
+It took 24 secs to summarize 4504705 sequences.
+
+Output File Names:
+ /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.summary
+
+mothur > screen.seqs(fasta=current, maxlength=310, maxambig=0, group=nbc16s.contigs.groups)
+
+It took 11 secs to screen 4504705 sequences, removed 1303398.
+
+/******************************************/
+Running command: remove.seqs(accnos=/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.bad.accnos, group=/home/sdunn/mothur/NBC16s/data/nbc16s.contigs.groups)
+Removed 1303398 sequences from your group file.
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.contigs.pick.groups
+
+/******************************************/
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.bad.accnos
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.fasta
+/home/sdunn/mothur/NBC16s/data/nbc16s.contigs.good.groups
+
+
+It took 24 secs to screen 4504705 sequences.
+
+mothur > summary.seqs()
+Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.fasta as input file for the fasta parameter.
+
+Using 56 processors.
+
+                Start   End     NBases  Ambigs  Polymer NumSeqs
+Minimum:        1       301     301     0       3       1
+2.5%-tile:      1       309     309     0       4       80033
+25%-tile:       1       310     310     0       4       800327
+Median:         1       310     310     0       4       1600654
+75%-tile:       1       310     310     0       5       2400981
+97.5%-tile:     1       310     310     0       6       3121275
+Maximum:        1       310     310     0       12      3201307
+Mean:   1       309     309     0       4
+# of Seqs:      3201307
+
+It took 17 secs to summarize 3201307 sequences.
+
+Output File Names:
+ /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.summary
+
+Unique.seqs(fasta=current)
+
+3201307 2416793
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.names
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.fasta
+
+mothur > get.current()
+
+Current RAM usage: 2.39109 Gigabytes. Total Ram: 251.795 Gigabytes.
+
+Current files saved by mothur:
+accnos=/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.bad.accnos
+fasta=/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.fasta
+group=/home/sdunn/mothur/NBC16s/data/nbc16s.contigs.good.groups
+name=/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.names
+processors=56
+summary=/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.summary
+
+Current input directory saved by mothur: /home/sdunn/mothur/NBC16s/data/
+
+Current output directory saved by mothur: /home/sdunn/mothur/NBC16s/data/
+
+Current default directory saved by mothur: /home/sdunn/mothur/
+
+Current working directory: /home/sdunn/mothur/
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/current_files.summary
+
+mothur > count.seqs(name=current, group=current)
+Using /home/sdunn/mothur/NBC16s/data/nbc16s.contigs.good.groups as input file for the group parameter.
+Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.names as input file for the name parameter.
+
+It took 54 secs to create a table for 3201307 sequences.
+
+Total number of sequences: 3201307
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.count_table
+
+mothur > summary.seqs(fasta=current, count=current)
+Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.count_table as input file for the count parameter.
+Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.fasta as input file for the fasta parameter.
+
+Using 56 processors.
+
+                Start   End     NBases  Ambigs  Polymer NumSeqs
+Minimum:        1       301     301     0       3       1
+2.5%-tile:      1       309     309     0       4       80033
+25%-tile:       1       310     310     0       4       800327
+Median:         1       310     310     0       4       1600654
+75%-tile:       1       310     310     0       5       2400981
+97.5%-tile:     1       310     310     0       6       3121275
+Maximum:        1       310     310     0       12      3201307
+Mean:   1       309     309     0       4
+# of unique seqs:       2416793
+total # of seqs:        3201307
+
+It took 145 secs to summarize 3201307 sequences.
+
+Output File Names:
+ /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.summary
+
+mothur > pcr.seqs(oligos=oligosPrimers.txt, fasta=silva.bacteria.fasta)
+
+It took 4 secs to screen 14956 sequences.
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/silva.bacteria.pcr.fasta
+/home/sdunn/mothur/NBC16s/data/silva.bacteria.bad.accnos
+/home/sdunn/mothur/NBC16s/data/silva.bacteria.scrap.pcr.fasta
+
+
+mothur > align.seqs(fasta=nbc16s.trim.contigs.good.unique.fasta,reference=silva.bacteria.pcr.fasta, flip=TRUE)
+
+It took 3912 secs to align 2416793 sequences.
+
+[WARNING]: 3193 of your sequences generated alignments that eliminated too many bases, a list is provided in /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.flip.accnos.
+[NOTE]: 1498 of your sequences were reversed to produce a better alignment.
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.align
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.align.report
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.flip.accnos
+
+mothur > summary.seqs(fasta=current, count=current)
+Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.count_table as input file for the count parameter.
+Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.align as input file for the fasta parameter.
+
+Using 56 processors.
+
+                Start   End     NBases  Ambigs  Polymer NumSeqs
+Minimum:        0       0       0       0       1       1
+2.5%-tile:      13862   23444   253     0       4       80033
+25%-tile:       13862   23444   253     0       4       800327
+Median:         13862   23444   253     0       4       1600654
+75%-tile:       13862   23444   253     0       5       2400981
+97.5%-tile:     13862   23444   254     0       6       3121275
+Maximum:        23444   23476   283     0       12      3201307
+Mean:   13867   23437   252     0       4
+# of unique seqs:       2416793
+total # of seqs:        3201307
+
+It took 201 secs to summarize 3201307 sequences.
+
+Output File Names:
+ /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.summary
+screen.seqs(fasta=current,  count=current, summary= nbc16s.trim.contigs.good.unique.summary, start=13862, end=23444, maxhomop=8)
+
+It took 230 secs to screen 2416793 sequences, removed 9729.
+
+/******************************************/
+Running command: remove.seqs(accnos=/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.bad.accnos, count=/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.count_table)
+Removed 11109 sequences from your count file.
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.pick.count_table
+
+/******************************************/
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.bad.accnos
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.summary
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.align
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.good.count_table
+
+
+It took 341 secs to screen 2416793 sequences.
+filter.seqs(fasta=current, vertical=T, trump=.)
+
+It took 74 secs to filter 2407064 sequences.
+
+
+
+Length of filtered alignment: 593
+Number of columns removed: 49407
+Length of the original alignment: 50000
+Number of sequences used to construct filter: 2407064
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.filter
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.fasta
+unique.seqs(fasta=current, count=current)
+2407064 956568
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.count_table
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.fasta
+
+Summary.seqs()
+Using 56 processors.
+[WARNING]: This command can take a namefile and you did not provide one. The current namefile is /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.names which seems to match /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.fasta.
+
+                Start   End     NBases  Ambigs  Polymer NumSeqs
+Minimum:        1       593     250     0       3       1
+2.5%-tile:      1       593     253     0       4       23915
+25%-tile:       1       593     253     0       4       239143
+Median:         1       593     253     0       4       478285
+75%-tile:       1       593     253     0       5       717427
+97.5%-tile:     1       593     254     0       6       932654
+Maximum:        1       593     270     0       8       956568
+Mean:   1       593     253     0       4
+# of Seqs:      956568
+
+It took 5 secs to summarize 956568 sequences.
+
+Output File Names:
+ /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.summary
+
+pre.cluster(fasta=current, count=current, diffs=2)
+
+Total number of sequences before pre.cluster was 26478.
+pre.cluster removed 14976 sequences.
+
+It took 29 secs to cluster 14976 sequences.
+It took 346 secs to run pre.cluster.
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.fasta
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.count_table
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170812HA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170818CRA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170818CRB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170818CRC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170818FA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170818FB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170818FC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170818HB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170818HC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170818SHA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170818SHB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170818SHC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170818SOA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170818SOB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170818SOC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170818TA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170818TB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170818TC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170828CRA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170828CRB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170828CRC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170828FA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170828FB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170828FC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170828HA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170828HC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170828SHA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170828SHB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170828SHC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170828SOA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170828SOB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170828SOC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170828TA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170828TB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170828TC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170905CRA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170905CRB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170905CRC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170905FA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170905FB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170905FC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170905HA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170905HB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170905HC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170905SHA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170905SHB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170905SHC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170905SOA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170905SOB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170905SOC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170905TA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170905TB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170905TC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170915CRA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170915CRB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170915CRC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170915FA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170915FB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170915FC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170915HA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170915HB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170915HC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170915SHA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170915SHB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170915SHC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170915SOA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170915SOB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170915SOC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170915TA.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170915TB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.170915TC.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.180828HB.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.SDKC1.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.SDKC2.map
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.SDKC3.map
+chimera.uchime(fasta=current,count=current, dereplicate=t)
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.pick.count_table
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.chimeras
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.accnos
+remove.seqs(fasta=current, accnos=current)
+
+mothur > remove.seqs(fasta=current, accnos=current)
+Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.accnos as input file for the accnos parameter.
+Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.fasta as input file for the fasta parameter.
+[WARNING]: This command can take a namefile and you did not provide one. The current namefile is /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.names which seems to match /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.fasta.
+Removed 99127 sequences from your fasta file.
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.fasta
+
+mothur > summary.seqs()
+Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.fasta as input file for the fasta parameter.
+
+Using 56 processors.
+[WARNING]: This command can take a namefile and you did not provide one. The current namefile is /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.names which seems to match /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.fasta.
+
+                Start   End     NBases  Ambigs  Polymer NumSeqs
+Minimum:        1       593     250     0       3       1
+2.5%-tile:      1       593     253     0       4       7851
+25%-tile:       1       593     253     0       4       78510
+Median:         1       593     253     0       4       157019
+75%-tile:       1       593     253     0       5       235528
+97.5%-tile:     1       593     254     0       6       306187
+Maximum:        1       593     270     0       8       314037
+Mean:   1       593     253     0       4
+# of Seqs:      314037
+
+It took 1 secs to summarize 314037 sequences.
+
+Output File Names:
+ /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.summary
+classify.seqs(fasta=current, count=current ,reference=trainset9_032012.pds.fasta, taxonomy=trainset9_032012.pds.tax, cutoff=80)
+
+It took 98 secs to classify 314037 sequences.
+
+
+It took 16 secs to create the summary file for 314037 sequences.
+
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.pds.wang.taxonomy
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.pds.wang.tax.summary
+
+remove.lineage(fasta=current, count=current, taxonomy=current, taxon=Chloroplast-Mitochondira-unknown-Archaea-Eukaryota)
+
+Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.pick.count_table as input file for the count parameter.
+Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.fasta as input file for the fasta parameter.
+Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.pds.wang.taxonomy as input file for the taxonomy parameter.
+
+[NOTE]: The count file should contain only unique names, so mothur assumes your fasta, list and taxonomy files also contain only uniques.
+
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.pds.wang.pick.taxonomy
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.pick.fasta
+/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.count_table
+
+mothur > get.current()
+
+Current RAM usage: 32.5835 Gigabytes. Total Ram: 251.795 Gigabytes.
+
+Current files saved by mothur:
+accnos=/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.accnos
+fasta=/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.pick.fasta
+group=/home/sdunn/mothur/NBC16s/data/nbc16s.contigs.good.groups
+name=/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.names
+oligos=/home/sdunn/mothur/NBC16s/data/oligosPrimers.txt
+taxonomy=/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.pds.wang.pick.taxonomy
+count=/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.count_table
+processors=56
+summary=/home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.summary
+
+Current input directory saved by mothur: /home/sdunn/mothur/NBC16s/data/
+
+Current output directory saved by mothur: /home/sdunn/mothur/NBC16s/data/
+
+Current default directory saved by mothur: /home/sdunn/mothur/
+
+Current working directory: /home/sdunn/mothur/
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/current_files.summary
+
+
+mothur > system(cp /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.pick.fasta nbc16s.final.fasta)
+
+
+mothur > system(cp /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.count_table nbc16s.final.count_table)
+
+
+mothur > system(cp /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.pds.wang.pick.taxonomy nbc16s.final.taxonomy)
+mothur > count.groups(count=nbc16s.final.count_table)
+Unable to open /home/sdunn/mothur/NBC16s/data/nbc16s.final.count_table. Trying input directory /home/sdunn/mothur/NBC16s/data/nbc16s.final.count_table.
+Unable to open /home/sdunn/mothur/NBC16s/data/nbc16s.final.count_table. Trying output directory /home/sdunn/mothur/NBC16s/data/nbc16s.final.count_table.
+Unable to open /home/sdunn/mothur/NBC16s/data/nbc16s.final.count_table. Trying default /home/sdunn/mothur/nbc16s.final.count_table.
+170812HA contains 33721.
+170818CRA contains 416.
+170818CRB contains 7316.
+170818CRC contains 452.
+170818FA contains 46164.
+170818FB contains 51384.
+170818FC contains 33125.
+170818HB contains 40776.
+170818HC contains 39778.
+170818SHA contains 46003.
+170818SHB contains 41871.
+170818SHC contains 40037.
+170818SOA contains 33840.
+170818SOB contains 41298.
+170818SOC contains 44268.
+170818TA contains 34301.
+170818TB contains 38995.
+170818TC contains 28 955.
+170828CRA contains 13873.
+170828CRB contains 34140.
+170828CRC contains 13542.
+170828FA contains 44843.
+170828FB contains 35418.
+170828FC contains 38732.
+170828HA contains 34582.
+170828HC contains 42040.
+170828SHA contains 48417.
+170828SHB contains 40584.
+170828SHC contains 46331.
+170828SOA contains 34288.
+170828SOB contains 40233.
+170828SOC contains 47850.
+170828TA contains 35296.
+170828TB contains 34211.
+170828TC contains 34353.
+170905CRA contains 5773.
+170905CRB contains 7023.
+170905CRC contains 5096.
+170905FA contains 41463.
+170905FB contains 40058.
+170905FC contains 42179.
+170905HA contains 48134.
+170905HB contains 36733.
+170905HC contains 38558.
+170905SHA contains 39038.
+170905SHB contains 41371.
+170905SHC contains 43096.
+170905SOA contains 40758.
+170905SOB contains 44362.
+170905SOC contains 36976.
+170905TA contains 38440.
+170905TB contains 36144.
+170905TC contains 34957.
+170915CRA contains 20113.
+170915CRB contains 27333.
+170915CRC contains 21830.
+170915FA contains 50046.
+170915FB contains 46054.
+170915FC contains 35592.
+170915HA contains 39768.
+170915HB contains 40305.
+170915HC contains 27166.
+170915SHA contains 42465.
+170915SHB contains 44847.
+170915SHC contains 47412.
+170915SOA contains 43709.
+170915SOB contains 46279.
+170915SOC contains 45488.
+170915TA contains 44638.
+170915TB contains 33270.
+170915TC contains 45105.
+180828HB contains 43882.
+SDKC1 contains 22597.
+SDKC2 contains 20756.
+SDKC3 contains 4704.
+
+Total seqs: 2634951.
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.count.summary
+sub.sample(fasta=nbc16s.final.fasta, count=nbc16s.final.count_table, taxonomy=nbc16s.final.taxonomy, persample=t, size=27166)
+
+
+You have selected a size that is larger than 170818CRA number of sequences, removing 170818CRA.
+You have selected a size that is larger than 170818CRB number of sequences, removing 170818CRB.
+You have selected a size that is larger than 170818CRC number of sequences, removing 170818CRC.
+You have selected a size that is larger than 170828CRA number of sequences, removing 170828CRA.
+You have selected a size that is larger than 170828CRC number of sequences, removing 170828CRC.
+You have selected a size that is larger than 170905CRA number of sequences, removing 170905CRA.
+You have selected a size that is larger than 170905CRB number of sequences, removing 170905CRB.
+You have selected a size that is larger than 170905CRC number of sequences, removing 170905CRC.
+You have selected a size that is larger than 170915CRA number of sequences, removing 170915CRA.
+You have selected a size that is larger than 170915CRC number of sequences, removing 170915CRC.
+You have selected a size that is larger than SDKC1 number of sequences, removing SDKC1.
+You have selected a size that is larger than SDKC2 number of sequences, removing SDKC2.
+You have selected a size that is larger than SDKC3 number of sequences, removing SDKC3.
+Sampling 27166 from each group.
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.count_table
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.taxonomy
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.fasta
+
+PREPARING FOR ANALYSIS
+Uses taxonomic information to split the sequences into bins and cluster within each bin (assigning sequences to OTUs). Taxlevel=4 refers to order. 
+
+cluster.split(fasta= nbc16s.final.subsample.fasta, count= nbc16s.final.subsample.count_table, taxonomy= nbc16s.final.subsample.taxonomy, splitmethod=classify, taxlevel=4, cutoff=0.03, processors=56)
+
+It took 3418 seconds to cluster
+Merging the clustered files...
+It took 3 seconds to merge.
+/******************************************/
+Running command: sens.spec(cutoff=0.15, list=/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.list, column=/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.dist, count=/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.count_table)
+
+NOTE: sens.spec assumes that only unique sequences were used to generate the distance matrix.
+
+It took 5456 to run sens.spec.
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.sensspec
+
+/******************************************/
+Done.
+
+
+label   cutoff  tp      tn      fp      fn      sensitivity     specificity     ppv     npv     fdr     accuracy        mcc     f1score
+0.16    0.16    466837239       20876008737     7131847 37174967        0.9262  0.9997  0.985   0.9982  0.01505 0.9979  -0.8519 0.9547
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.dist
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.list
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.sensspec
+make.shared(list=nbc16s.final.subsample.opti_mcc.list, count= nbc16s.final.subsample.count_table, label=0.03)
+
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.shared
+FInALLYY!!!!!
+
+mothur > classify.otu(list=nbc16s.final.subsample.opti_mcc.list, count= nbc16s.final.subsample.count_table, taxonomy= nbc16s.final.subsample.taxonomy, label=0.03)
+0.03    31065
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.0.03.cons.taxonomy
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.0.03.cons.tax.summary
+PHYLOTYPES
+phylotype(taxonomy=nbc16s.final.subsample.taxonomy)
+
+1
+2
+3
+4
+5
+6
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.tx.sabund
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.tx.rabund
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.tx.list
+
+make.shared(list= nbc16s.final.subsample.tx.list, count=nbc16s.final.subsample.count_table,label=1)
+1
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.tx.shared
+
+classify.otu(list=current, count=current, taxonomy=current, label=1)
+
+Using /home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.count_table as input file for the count parameter.
+Using /home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.tx.list as input file for the list parameter.
+Using /home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.taxonomy as input file for the taxonomy parameter.
+1       684
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.tx.1.cons.taxonomy
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.tx.1.cons.tax.summary
+
+
+mothur > summary.tax(taxonomy=nbc16s.final.subsample.taxonomy,count=nbc16s.final.subsample.count_table)
+
+It took 9 secs to create the summary file for 1684292 sequences.
+
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.tax.summary
+NMDS
+
+mothur > dist.shared(shared=nbc16s.final.subsample.opti_mcc.shared, calc=braycurtis-thetayc)
+
+Using 56 processors.
+0.03
+1
+
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.braycurtis.0.03.lt.dist
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.thetayc.0.03.lt.dist
+
+mothur > nmds(phylip=nbc16s.final.subsample.opti_mcc.braycurtis.0.16.lt.dist,iters=100)
+Processing Dimension: 2
+1 100
+
+
+Number of dimensions:   2
+Lowest stress : 0.279091
+R-squared for configuration:    0.747613
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.braycurtis.0.03.lt.nmds.iters
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.braycurtis.0.03.lt.nmds.stress
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.braycurtis.0.03.lt.nmds.axes
+
+
+mothur > nmds(phylip=nbc16s.final.subsample.opti_mcc.thetayc.0.16.lt.dist,iters=100)
+
+
+Number of dimensions:   2
+Lowest stress : 0.216677
+R-squared for configuration:    0.814985
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.thetayc.0.03.lt.nmds.iters
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.thetayc.0.03.lt.nmds.stress
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.thetayc.0.03.lt.nmds.axes
+
+
+
+mothur > summary.single(shared=nbc16s.final.subsample.opti_mcc.shared, calc=sobs-chao-shannon-coverage)
+
+Processing group 170812HA
+
+0.16
+
+Processing group 170818FA
+
+0.16
+
+Processing group 170818FB
+
+0.16
+
+Processing group 170818FC
+
+0.16
+
+Processing group 170818HB
+
+0.16
+
+Processing group 170818HC
+
+0.16
+
+Processing group 170818SHA
+
+0.16
+
+Processing group 170818SHB
+
+0.16
+
+Processing group 170818SHC
+
+0.16
+
+Processing group 170818SOA
+
+0.16
+
+Processing group 170818SOB
+
+0.16
+
+Processing group 170818SOC
+
+0.16
+
+Processing group 170818TA
+
+0.16
+
+Processing group 170818TB
+
+0.16
+
+Processing group 170818TC
+
+0.16
+
+Processing group 170828CRB
+
+0.16
+
+Processing group 170828FA
+
+0.16
+
+Processing group 170828FB
+
+0.16
+
+Processing group 170828FC
+
+0.16
+
+Processing group 170828HA
+
+0.16
+
+Processing group 170828HC
+
+0.16
+
+Processing group 170828SHA
+
+0.16
+
+Processing group 170828SHB
+
+0.16
+ 
+Processing group 170828SHC
+
+0.16
+
+Processing group 170828SOA
+
+0.16
+
+Processing group 170828SOB
+
+0.16
+
+Processing group 170828SOC
+
+0.16
+
+Processing group 170828TA
+
+0.16
+
+Processing group 170828TB
+
+0.16
+
+Processing group 170828TC
+
+0.16
+
+Processing group 170905FA
+
+0.16
+
+Processing group 170905FB
+
+0.16
+
+Processing group 170905FC
+
+0.16
+
+Processing group 170905HA
+
+0.16
+
+Processing group 170905HB
+
+0.16
+
+Processing group 170905HC
+
+0.16
+
+Processing group 170905SHA
+
+0.16
+
+Processing group 170905SHB
+
+0.16
+
+Processing group 170905SHC
+
+0.16
+
+Processing group 170905SOA
+
+0.16
+
+Processing group 170905SOB
+
+0.16
+
+Processing group 170905SOC
+
+0.16
+
+Processing group 170905TA
+
+0.16
+
+Processing group 170905TB
+
+0.16
+
+Processing group 170905TC
+
+0.16
+
+Processing group 170915FA
+
+0.16
+
+Processing group 170915FB
+
+0.16
+
+Processing group 170915FC
+
+0.16
+
+Processing group 170915HA
+
+0.16
+
+Processing group 170915HB
+
+0.16
+
+Processing group 170915SHA
+
+0.16
+
+Processing group 170915SHB
+
+0.16
+
+Processing group 170915SHC
+
+0.16
+
+Processing group 170915SOA
+
+0.16
+
+Processing group 170915SOB
+
+0.16
+
+Processing group 170915SOC
+
+0.16
+
+Processing group 170915TA
+
+0.16
+
+Processing group 170915TB
+
+0.16
+
+Processing group 170915TC
+
+0.16
+
+Processing group 180828HB
+
+0.16
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.groups.summary
+mothur > anosim(phylip=nbc16s.final.subsample.opti_mcc.braycurtis.0.16.lt.dist, design=NBC_design_clean.txt)
+
+comparison      R-value P-value
+170818-170828-170905-170915     0.565676        <0.001*
+170818-170828   -0.00809259     0.504
+170818-170905   0.793778        <0.001*
+170818-170915   0.881851        <0.001*
+170828-170905   0.719815        <0.001*
+170828-170915   0.772152        <0.001*
+170905-170915   0.300024        <0.001*
+
+Experiment-wise error rate: 0.05
+Pair-wise error rate (Bonferroni): 0.00833333
+If you have borderline P-values, you should try increasing the number of iterations
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.braycurtis.0.16.lt.anosim
+
+
+mothur > anosim(phylip=nbc16s.final.subsample.opti_mcc.braycurtis.0.16.lt.dist, design=NBC_design_clean_substrate.txt)
+
+comparison      R-value P-value
+CR-F-H-SH-SO-T  0.109508        0.003*
+CR-F    0.901515        0.087
+CR-H    0.957025        0.077
+CR-SH   0.876263        0.088
+CR-SO   0.813131        0.071
+CR-T    1       0.073
+F-H     0.0187203       0.272
+F-SH    0.0596065       0.146
+F-SO    0.0593434       0.154
+F-T     0.113584        0.068
+H-SH    0.0163411       0.312
+H-SO    0.0679314       0.126
+H-T     0.0664288       0.116
+SH-SO   -0.0608165      0.887
+SH-T    0.199021        0.014
+SO-T    0.196864        0.011
+
+Experiment-wise error rate: 0.05
+Pair-wise error rate (Bonferroni): 0.00333333
+If you have borderline P-values, you should try increasing the number of iterations
+
+Output File Names:
+/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.braycurtis.0.16.lt.anosim
