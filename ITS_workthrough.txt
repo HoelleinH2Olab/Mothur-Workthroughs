@@ -1,14 +1,27 @@
 ITS_workthrough  ### 6/21/2018 ##
 
+## ITS is VERY different than 16s or 23s.  I will try to explain at each step, but we use a wholyl different approach to align our sequences to a reference data base.
 
+Files to cp from /home/sdunn/mothur/NBCITS
+UNITE_public_mothur_01.12.2017.fasta
+UNITE_public_mothur_01.12.2017_taxonomy.txt
+
+##If you ahven't already
 mothur > set.dir(input=/home/sdunn/mothur/NBCITS, output=/home/sdunn/mothur/NBCITS)
 Mothur's directories:
 outputDir=/home/sdunn/mothur/NBCITS/
 inputDir=/home/sdunn/mothur/NBCITS/
 
+
+
+
+## Mkae files
+mothur >  make.file() 
 Output File Names:
 /home/sdunn/mothur/NBCITS/nbcits.files
 
+
+## Make Contigs
 mothur > make.contigs(file=nbcits.files, processors=28)
 
 Group count:
@@ -100,6 +113,7 @@ Output File Names:
 /home/sdunn/mothur/NBCITS/nbcits.contigs.report
 /home/sdunn/mothur/NBCITS/nbcits.contigs.groups
 
+##Get a summary
 mothur > summary.seqs(fasta=nbcits.trim.contigs.fasta)
 
                 Start   End     NBases  Ambigs  Polymer NumSeqs
@@ -118,6 +132,8 @@ It took 19 secs to summarize 3290149 sequences.
 Output File Names:
  /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.summary
 
+
+##First quality screen
 mothur > screen.seqs(fasta=current, maxlength=314, maxambig=0, group=nbcits.contigs.groups, processors=28)
 It took 10 secs to screen 3290149 sequences, removed 2085100.
 
@@ -127,7 +143,7 @@ Output File Names:
 /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.bad.accnos
 
 
-
+## Get another summary
 mothur > summary.seqs()
 Using /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.fasta as input file for the fasta parameter.
 
@@ -149,13 +165,15 @@ It took 7 secs to summarize 1205049 sequences.
 Output File Names:
  /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.summary
 
+
+## Retain unqiue seqs
  mothur > unique.seqs(fasta=current)
  
 Output File Names:
 /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.names
 /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.fasta
 
-
+## Count seqs in each sample
 mothur > count.seqs(name=current, group=current)
 Using /home/sdunn/mothur/NBCITS/nbcits.contigs.groups as input file for the group parameter.
 Using /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.names as input file for the name parameter.
@@ -164,7 +182,7 @@ It took 21 secs to create a table for 1205049 sequences.
 
 Total number of sequences: 1205049
 
-
+##Get another summary
 mothur > summary.seqs(fasta=current, count=current)
                 Start   End     NBases  Ambigs  Polymer NumSeqs
 Minimum:        1       237     237     0       3       1
@@ -182,15 +200,18 @@ It took 12 secs to summarize 1205049 sequences.
 
 Output File Names:
  /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.summary
-
- ##### Skip to pre.cluster step due to ITS,  source: https://www.researchgate.net/post/Mothur-formatted_UNITE_database ##### https://rpubs.com/maddieSC/mothur_SOP_2017
+###############################################################################################################################
+ ##### Skip to pre.cluster step due to ITS,  source: https://www.researchgate.net/post/Mothur-formatted_UNITE_database ##### https://rpubs.com/maddieSC/mothur_SOP_2017 is also a great resource!
+ 
+ 
+ ## We align our seqs programmatically and not relative to an alignment as we do for 16s and 23s.  This step takes a VERY LONG TIME TO FINISH.  Do this over the weekend....seriously.
  
  mothur > pre.cluster(fasta=current, count=current, diffs=2, align=needleman)
 Using /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.count_table as input file for the count parameter.
 Using /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.fasta as input file for the fasta parameter.
 
  It took 1742 secs to cluster 7198 sequences.
-It took 8030 secs to run pre.cluster.
+It took 8030 secs to run pre.cluster. ## TOLD YOU
 
 Output File Names:
 /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.precluster.fasta
@@ -271,6 +292,8 @@ Output File Names:
 /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.precluster.SDKC2.map
 /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.precluster.SDKC3.map
 
+
+## Get a summary
 mothur > summary.seqs(fasta=nbcits.trim.contigs.good.unique.precluster.fasta, count=nbcits.trim.contigs.good.unique.precluster.count_table)
 
                 Start   End     NBases  Ambigs  Polymer NumSeqs
@@ -290,6 +313,8 @@ It took 3 secs to summarize 1205049 sequences.
 Output File Names:
  /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.precluster.summary
 
+
+## Identify chimeras
  mothur > chimera.uchime(fasta=nbcits.trim.contigs.good.unique.precluster.fasta, count=nbcits.trim.contigs.good.unique.precluster.count_table, dereplicate=t)
  
 Output File Names:
@@ -297,6 +322,8 @@ Output File Names:
 /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.precluster.denovo.uchime.chimeras
 /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.precluster.denovo.uchime.accnos
 
+
+## Remove chimeras
 mothur > remove.seqs(fasta=nbcits.trim.contigs.good.unique.precluster.fasta, count=nbcits.trim.contigs.good.unique.precluster.denovo.uchime.pick.count_table, accnos=nbcits.trim.contigs.good.unique.precluster.denovo.uchime.accnos)
 
 Removed 1795 sequences from your fasta file.
@@ -306,6 +333,7 @@ Output File Names:
 /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.precluster.pick.fasta
 /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.precluster.denovo.uchime.pick.pick.count_table
 
+## Get summary
 mothur > summary.seqs(fasta=nbcits.trim.contigs.good.unique.precluster.pick.fasta, count=nbcits.trim.contigs.good.unique.precluster.denovo.uchime.pick.pick.count_table)
 
                 Start   End     NBases  Ambigs  Polymer NumSeqs
@@ -325,6 +353,8 @@ It took 4 secs to summarize 1202193 sequences.
 Output File Names:
  /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.precluster.pick.summary
 
+############################################################################################################################
+## Classify Seqs....Note you need the UNITE reference and tax files
 mothur > classify.seqs(fasta=nbcits.trim.contigs.good.unique.precluster.pick.fasta, count=nbcits.trim.contigs.good.unique.precluster.denovo.uchime.pick.count_table, reference=UNITE_public_mothur_01.12.2017.fasta, taxonomy=UNITE_public_mothur_01.12.2017_taxonomy.txt, cutoff=80,processors=28)
 It took 1067 secs to classify 110110 sequences.
 
@@ -338,7 +368,7 @@ Output File Names:
 /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.precluster.pick.2017_taxonomy.wang.flip.accnos
 
 
-
+## Remove undesirables
 mothur > remove.lineage(fasta=current, count=current, taxonomy=current, taxon=unknown-Archaea)
 Using /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.precluster.denovo.uchime.pick.count_table as input file for the count parameter.
 Using /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.precluster.pick.fasta as input file for the fasta parameter.
@@ -353,7 +383,7 @@ Output File Names:
 /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.precluster.denovo.uchime.pick.pick.count_table
 
 
-
+## Get summary
 mothur > summary.seqs(fasta=current, count=current)
 
                 Start   End     NBases  Ambigs  Polymer NumSeqs
@@ -373,6 +403,7 @@ It took 3 secs to summarize 1186191 sequences.
 Output File Names:
  /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.precluster.pick.pick.summary
 
+##Check you status
 mothur > get.current()
 
 Current RAM usage: 8.6836 Gigabytes. Total Ram: 251.795 Gigabytes.
@@ -397,20 +428,25 @@ Output File Names:
 /home/sdunn/mothur/NBCITS/current_files.summary
 
  
-#rename final files#
+##rename final files#
 mothur > system(cp /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.precluster.pick.pick.fasta /home/sdunn/mothur/NBCITS/nbcits.final.fasta)
 mothur > system(cp /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.precluster.denovo.uchime.pick.pick.count_table /home/sdunn/mothur/NBCITS/nbcits.final.count_table)
 mothur > system(cp /home/sdunn/mothur/NBCITS/nbcits.trim.contigs.good.unique.precluster.pick.2017_taxonomy.wang.pick.taxonomy /home/sdunn/mothur/NBCITS/nbcits.final.taxonomy)
 
+################################################################################################################################
+#NEW STEP!#  Since we don't use an alignment we need to have an alternative way to makue sure your sequences are aligned....enter the pariwaise seqs command####
 
-#NEW STEP!#  Since we don't use an alignment we need to have an alternative way to makue sur eyour sequences are aligned....enter the pariwaise seqs command####
-mothur > pairwise.seqs(fasta=nbcits.final.fasta,cutoff=0.10,processors=56)  This took several DAYS and generates a MASSIVE matrix...be warned! #Did nto use cutoff option intiially, fture runs whosuld
+#####This took several DAYS and generates a MASSIVE matrix...be warned! #Did not  use cutoff option intiially, future runs should be faster
+
+mothur > pairwise.seqs(fasta=nbcits.final.fasta,cutoff=0.10,processors=56)  
+
 
 It took 202226 to calculate the distances for 108055 sequences.
 
 Output File Names:
 /home/sdunn/mothur/NBCITS/nbcits.final.dist
 
+### Cluster split==create OTUs
 mothur > cluster.split(column=nbcits.final.dist, count=nbcits.final.count_table, method=average, large=true, processors=56)
 
 Cutoff was 0.15 changed cutoff to 0.01
@@ -421,9 +457,8 @@ It took 4 seconds to merge.
 Output File Names:
 /home/sdunn/mothur/NBCITS/nbcits.final.an.list
 
-Still need to count.groups###
 
-
+## Count OTUs in each sample.  Record lowest number of sample you want to retain
 mothur > count.groups(count=nbcits.final.count_table)
 count.groups(count=nbcits.final.count_table)
 170818CRA contains 5283.
@@ -507,6 +542,7 @@ Total seqs: 1186191.
 Output File Names:
 /home/sdunn/mothur/NBCITS/nbcits.final.count.summary
 
+## Sub sampling to lowest present.  You will have low numbers, so as long as you retain two of your triplicate samples you are fine
 mothur > sub.sample(fasta=nbcits.final.fasta, count=nbcits.final.count_table, taxonomy=nbcits.final.taxonomy, persample=t,size=8548)
 You have selected a size that is larger than 170818CRA number of sequences, removing 170818CRA.
 You have selected a size that is larger than 170818CRB number of sequences, removing 170818CRB.
@@ -530,11 +566,12 @@ Output File Names:
 /home/sdunn/mothur/NBCITS/nbcits.final.subsample.taxonomy
 /home/sdunn/mothur/NBCITS/nbcits.final.subsample.fasta
 
-
+##Make shared
 mothur > make.shared(list=nbcits.final.an.list,count=nbcits.final.subsample.count_table,label=0.03)
 Output File Names:
 /home/sdunn/mothur/NBCITS/nbcits.final.an.shared
 
+## take OTUs and give them names
 mothur > classify.seqs(fasta=nbcits.final.fasta, template=UNITE_public_mothur_01.12.2017.fasta, count=nbcits.final.count_table, taxonomy=UNITE_public_mothur_01.12.2017_taxonomy.txt)
 It took 1228 secs to classify 108055 sequences.
 
@@ -545,10 +582,14 @@ Output File Names:
 /home/sdunn/mothur/NBCITS/nbcits.final.2017_taxonomy.wang.tax.summary
 /home/sdunn/mothur/NBCITS/nbcits.final.2017_taxonomy.wang.flip.accnos
 
+## Generate tax summary 
 mothur > classify.otu(list=nbcits.final.an.list, taxonomy=nbcits.final.2017_taxonomy.wang.taxonomy, count=nbcits.final.count_table,label=0.03)
 
 Output File Names:
 /home/sdunn/mothur/NBCITS/nbcits.final.an.0.01.cons.taxonomy
 /home/sdunn/mothur/NBCITS/nbcits.final.an.0.01.cons.tax.summary  ####This is the file to send to R
+
+################################################################################################################
+You did it!  Move the file into your R directory and get to work!
 
 
