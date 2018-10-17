@@ -1,14 +1,20 @@
-####23S Sequence Processing  Start 6/14/2018####
+##23s Sequences##
 
-remove "-" from fastq file names!
-sdunn@gorilla:~/mothur/NBC23s/Sequences$ rename 's/\-/_/g' *.fastq
+#####Starting note
+#necessary reference files and oligos files can be found in /home/sdunn/mothur/NBC23s
+File to cp
+silva.sd_v132.align
+silva.nr_v132_LSU.align
+silva.nr_v132_LSU.tax
 
-
+##If you haven't already, set the dir
 mothur > set.dir(input=home/sdunn/mothur/NBC23s/Sequences, output=home/sdunn/mothur/NBC23s/Sequences)
 Mothur's directories:
 outputDir=home/sdunn/mothur/NBC23s/Sequences/
 inputDir=home/sdunn/mothur/NBC23s/Sequences/
 
+
+### Make file
 mothur > make.file(inputdir=/home/sdunn/mothur/NBC23s/Sequences,outputdir=/home/sdunn/mothur/NBC23s/Sequences, type=fastq, prefix=nbc23s)
 Setting output directory to: /home/sdunn/mothur/NBC23s/Sequences/
 Setting input directory to: /home/sdunn/mothur/NBC23s/Sequences/
@@ -16,7 +22,7 @@ Setting input directory to: /home/sdunn/mothur/NBC23s/Sequences/
 Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.files
 
-
+##Us efile just created to make contigs.  #make sure to use an appropriate number of processors
 mothur > make.contigs(file=nbc23s.files, processors=10)
 
 
@@ -111,7 +117,7 @@ Output File Names:
 
 
 
-
+##Get summary
 mothur > summary.seqs(fasta=nbc23s.trim.contigs.fasta)
 Using 56 processors.
 
@@ -131,7 +137,7 @@ It took 14 secs to summarize 3151852 sequences.
 Output File Names:
  /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.summary
 
- 
+ ##First quality screen,  note that the 23s primer length is a bit longer than bacteria
  mothur > screen.seqs(fasta=current, maxlength=410, maxambig=0, group=nbc23s.contigs.groups, processors=10)
  
  It took 11 secs to screen 3151852 sequences, removed 462611.
@@ -144,7 +150,7 @@ Output File Names:
 
 It took 11 secs to screen 3151852 sequences.
 
-
+##Get summary
 mothur > summary.seqs()
 Using /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.fasta as input file for the fasta parameter.
 
@@ -166,6 +172,8 @@ It took 11 secs to summarize 2689241 sequences.
 Output File Names:
  /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.summary
 
+
+## Find unique seqs
 mothur > unique.seqs(fasta=current)
 
 2689241 1451262
@@ -174,6 +182,8 @@ Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.names
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.fasta
 
+
+## Count unique seqs in each sample
 mothur > count.seqs(name=current, group=current)
 
 Using /home/sdunn/mothur/NBC23s/Sequences/nbc23s.contigs.groups as input file for the group parameter.
@@ -186,7 +196,7 @@ Total number of sequences: 2689241
 Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.count_table
 
-
+##Get Summary
 mothur > summary.seqs(fasta=current, count=current)
 Using /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.count_table as input file for the count parameter.
 Using /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.fasta as input file for the fasta parameter.
@@ -212,8 +222,8 @@ Output File Names:
 
  
  
- 
- ####Re run PC.seqs ont he silva.sd_v132.align file to make sure start and end points line up#####
+ ###
+ ####Re run PC.seqs on the silva.sd_v132.align file to make sure start and end points line up#####
  
  mothur > pcr.seqs(fasta=silva.sd_v132.align, start=115035, end=119675, keepdots=F)
  It took 1 secs to screen 1732 sequences.
@@ -222,7 +232,7 @@ Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/silva.sd_v132.pcr.align
 
 
-
+##Get summary
 mothur > summary.seqs(fasta=silva.sd_v132.pcr.align)
 
 Using 10 processors.
@@ -243,7 +253,7 @@ It took 0 secs to summarize 1732 sequences.
 Output File Names:
  /home/sdunn/mothur/NBC23s/Sequences/silva.sd_v132.pcr.summary
 
- 
+ ##Align your samples to reference
  mothur > align.seqs(fasta=nbc23s.trim.contigs.good.unique.fasta, reference=silva.sd_v132.pcr.align)
  
  
@@ -259,7 +269,7 @@ Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.flip.accnos
 
 
-
+##Get summary
 mothur > summary.seqs(fasta=current, count=current)
 Using /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.count_table as input file for the count parameter.
 Using /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.align as input file for the fasta parameter.
@@ -287,7 +297,7 @@ Output File Names:
 Output File Names:
  /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.summary
 
- 
+ ##Quality screen.  note that start and end values match table above
  mothur > screen.seqs(fasta=nbc23s.trim.contigs.good.unique.align,  count=nbc23s.trim.contigs.good.count_table, summary= nbc23s.trim.contigs.good.unique.summary, start=2, end=4640, maxhomop=8)
 
 
@@ -302,7 +312,7 @@ Output File Names:
 
 It took 84 secs to screen 1451262 sequences.
 
-
+##Remove  bad sequences (those that won't align)
 mothur > remove.seqs(accnos=nbc23s.trim.contigs.good.unique.bad.accnos, count=nbc23s.trim.contigs.good.count_table)
 
 Removed 110268 sequences from your count file.
@@ -310,6 +320,8 @@ Removed 110268 sequences from your count file.
 Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.pick.count_table
 
+
+## Filter seqs
 filter.seqs(fasta=current, vertical=T, trump=.)
 
 It took 16 secs to filter 1345465 sequences.
@@ -325,7 +337,7 @@ Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.filter
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.fasta
 
-
+##Get the unique seqs again
 mothur > unique.seqs(fasta=current, count=current)
 Using /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.pick.count_table as input file for the count parameter.
 Using /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.fasta as input file for the fasta parameter.
@@ -334,6 +346,9 @@ Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.count_table
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.unique.fasta
 
+
+
+## Get another summary.  Empty parentheses will default to current avlue (get.current())
 summary.seqs()
 
                 Start   End     NBases  Ambigs  Polymer NumSeqs
@@ -352,7 +367,8 @@ It took 6 secs to summarize 1268129 sequences.
 Output File Names:
  /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.unique.summary
 
-
+####################
+#pre clustering will help speed up clustering later
 mothur > pre.cluster(fasta=current, count=current, diffs=2)
 
 
@@ -438,6 +454,8 @@ Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.SDKC2.map
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.SDKC3.map
 
+
+## Identify chimeras
 mothur > chimera.uchime(fasta=current, count=current, dereplicate=t)
 
 It took 7365 secs to check 764725 sequences.
@@ -448,7 +466,7 @@ Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.chimeras
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.accnos
 
-
+## Remove chimeras
 mothur > remove.seqs(fasta=current, accnos=current)
 Using /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.accnos as input file for the accnos parameter.
 Using /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.fasta as input file for the fasta parameter.
@@ -458,6 +476,8 @@ Removed 139090 sequences from your fasta file.
 Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.pick.fasta
 
+
+## get summary
 mothur > summary.seqs()
 
 Using /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.pick.fasta as input file for the fasta parameter.
@@ -482,8 +502,15 @@ It took 3 secs to summarize 594291 sequences.
 Output File Names:
  /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.pick.summary
 
+#############################################################################################################################
+BIG STEP
+## Classify seqs against reference files.  I added in breaks to increase readability
+mothur > classify.seqs(fasta=nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.pick.fasta, count=nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.pick.count_table ,
+reference=silva.nr_v132_LSU.align, 
+taxonomy=silva.nr_v132_LSU.tax, 
+cutoff=80,processors=20)
 
-mothur > classify.seqs(fasta=nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.pick.fasta, count=nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.pick.count_table ,reference=silva.nr_v132_LSU.align, taxonomy=silva.nr_v132_LSU.tax, cutoff=80,processors=20)
+
 It took 498 secs to classify 594291 sequences.
 It took 27 secs to create the summary file for 594291 sequences.
 Output File Names:
@@ -491,17 +518,24 @@ Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.pick.nr_v132_LSU.wang.tax.summary
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.pick.nr_v132_LSU.wang.flip.accnos
 
-
+##Remove undesirable lienages....do NOT remove bacteria
 mothur > remove.lineage(fasta=current, count=current, taxonomy=current, taxon=unknown-Archaea)
 Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.pick.nr_v132_LSU.wang.pick.taxonomy
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.pick.pick.fasta
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.count_table
 
+##### Renaming critical files (1 of 3)
 mothur > system(cp /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.pick.pick.fasta /home/sdunn/mothur/NBC23s/Sequences/nbc23s.final.fasta)
+
+##### Renaming critical files (2 of 3)
 mothur > system(cp /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.count_table /home/sdunn/mothur/NBC23s/Sequences/nbc23s.final.count_table)
+
+##### Renaming critical files (3 of 3)
 mothur > system(cp /home/sdunn/mothur/NBC23s/Sequences/nbc23s.trim.contigs.good.unique.good.filter.unique.precluster.pick.nr_v132_LSU.wang.pick.taxonomy /home/sdunn/mothur/NBC23s/Sequences/nbc23s.final.taxonomy)
 
+
+#####Coutn seqs in each sample.  Write down lowest number in sample you want to retain.
 mothur > count.groups(count=nbc23s.final.count_table)
 170818CRA contains 44.
 170818CRB contains 13.
@@ -584,46 +618,66 @@ Total seqs: 2360231.
 Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.final.count.summary
 #smallest is 170818TB 6301
+
+
+### Subsampling will result in all sampels having he same number of seqs and allowsa for easier comparisons later
 mothur > sub.sample(fasta=nbc23s.final.fasta, count=nbc23s.final.count_table, taxonomy=nbc23s.final.taxonomy, persample=t, size=6301)
 #may need to be re-run if subsample is too small
 
+
+################################################################################################################
 PREPARING FOR ANALYSIS
 Uses taxonomic information to split the sequences into bins and cluster within each bin (assigning sequences to OTUs). 
 Taxlevel=4 refers to order. 
+##
+
 mothur > cluster.split(fasta= nbc23s.final.subsample.fasta, count= nbc23s.final.subsample.count_table, taxonomy= nbc23s.final.subsample.taxonomy, splitmethod=classify, taxlevel=4, cutoff=0.03, processors=28)
 Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.final.subsample.dist
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.final.subsample.opti_mcc.list
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.final.subsample.opti_mcc.sensspec
 
+
+## Make list of shared
 mothur > make.shared(list=nbc23s.final.subsample.opti_mcc.list, count= nbc23s.final.subsample.count_table, label=0.03)
 Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.final.subsample.opti_mcc.shared
 
+
+## Classify the OTUs by associatig them with named refrences
 mothur > classify.otu(list=nbc23s.final.subsample.opti_mcc.list, count= nbc23s.final.subsample.count_table, taxonomy= nbc23s.final.subsample.taxonomy, label=0.03)
 0.03    20065
 Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.final.subsample.opti_mcc.0.03.cons.taxonomy
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.final.subsample.opti_mcc.0.03.cons.tax.summary
 
+
+#Don't really know what phylotype does....it's important though
 mothur > phylotype(taxonomy=nbc23s.final.subsample.taxonomy)
 Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.final.subsample.tx.sabund
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.final.subsample.tx.rabund
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.final.subsample.tx.list
 
+
+## Make shared again
 mothur > make.shared(list= nbc23s.final.subsample.tx.list, count=nbc23s.final.subsample.count_table,label=1)
 Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.final.subsample.tx.shared
 
+
+## Classify
 mothur > classify.otu(list=current, count=current, taxonomy=current, label=1)
 Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.final.subsample.tx.1.cons.taxonomy
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.final.subsample.tx.1.cons.tax.summary
 
+
+## generate tax summary table to export to R
 mothur > summary.tax(taxonomy=nbc23s.final.subsample.taxonomy,count=nbc23s.final.subsample.count_table)
 Output File Names:
 /home/sdunn/mothur/NBC23s/Sequences/nbc23s.final.subsample.tax.summary
 
 
-
+##################################################################################################################
+YOU DID IT!  Export the tax.summary table to R and use the community aanlysis markdon file.
