@@ -1,17 +1,26 @@
-Import fastq or gz files into a subdirectory of mother folder.  You should unzip the .gz files if you haven’t already.  This can be done from the Ubuntu command line:
+Import fastq or gz files into a subdirectory of mother folder.  
+upload directly from desktop in mobaxterm.  Also, take this opportunity to copy (cp) the silva referenence, training set, etc.
 
-sdunn@gorilla:~/mothur/NBC16s$ gunzip *.fastq.gz
+Files to cp from /home/sdunn/mothur/NBC16s:
+oligosPrimers.txt
+silva.bacteria.fasta
+trainset9_032012.pds.fasta
+trainset9_032012.pds.tax
 
-Running mother on Reddy lab GORILLA
-Once you are logged in, enter the following
-cd mother
-./mothur
 
-Now you can run the “make files” command in the miseq sop.  Change the prefix to something more useful than ”stability”
+
+You should unzip the .gz files if you haven’t already.  This can be done from the command line:
+
+sdunn@gorilla:~/mothur/NBC16s$ gunzip *.fastq.gz   #note the command comes after the $  Make sure you are in the appropriate directory!
+
+
+##### Now you can run the “make files” command in the miseq sop.  Change the prefix to something more useful than ”stability”
 make.file(inputdir=/home/sdunn/mother/NBC16s/data, outputdir=/home/sdunn/mother/NBC16s/data, type=fastq, prefix=nbc16s)
 
+## Now that we have made a .files file we can make contigs
 make.contigs(file=nbc16s.files)
-Make.contigs
+
+
 Group count:
 170812HA        76779
 170818CRA       839
@@ -101,12 +110,7 @@ NBC16s/data/nbc16s.scrap.contigs.qual
 NBC16s/data/nbc16s.contigs.report
 NBC16s/data/nbc16s.contigs.groups
 
-
-mothur > set.dir(input=./NBC16s/data, output=./NBC16s/data)
-Mothur's directories:
-outputDir=/home/sdunn/mothur/NBC16s/data/
-inputDir=/home/sdunn/mothur/NBC16s/data/
-
+##Summarize what we have so far
 mothur > summary.seqs(fasta=nbc16s.trim.contigs.fasta)
 
 Using 56 processors.
@@ -127,6 +131,7 @@ It took 24 secs to summarize 4504705 sequences.
 Output File Names:
  /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.summary
 
+#First of several screens to improve quality.  note that we are usign the "current" option.  This helps with long runs if you don't close your session!
 mothur > screen.seqs(fasta=current, maxlength=310, maxambig=0, group=nbc16s.contigs.groups)
 
 It took 11 secs to screen 4504705 sequences, removed 1303398.
@@ -148,6 +153,7 @@ Output File Names:
 
 It took 24 secs to screen 4504705 sequences.
 
+##summarize the changes made
 mothur > summary.seqs()
 Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.fasta as input file for the fasta parameter.
 
@@ -169,7 +175,8 @@ It took 17 secs to summarize 3201307 sequences.
 Output File Names:
  /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.summary
 
-Unique.seqs(fasta=current)
+##We now want to retain only unique sequences
+mothur > unique.seqs(fasta=current)
 
 3201307 2416793
 
@@ -177,6 +184,8 @@ Output File Names:
 /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.names
 /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.fasta
 
+
+##The get.current() command tells you what files are current...it comes in handy when troubleshooting
 mothur > get.current()
 
 Current RAM usage: 2.39109 Gigabytes. Total Ram: 251.795 Gigabytes.
@@ -200,6 +209,8 @@ Current working directory: /home/sdunn/mothur/
 Output File Names:
 /home/sdunn/mothur/NBC16s/data/current_files.summary
 
+
+## lets count how many sequences are in each sample
 mothur > count.seqs(name=current, group=current)
 Using /home/sdunn/mothur/NBC16s/data/nbc16s.contigs.good.groups as input file for the group parameter.
 Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.names as input file for the name parameter.
@@ -211,6 +222,8 @@ Total number of sequences: 3201307
 Output File Names:
 /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.count_table
 
+
+##Summarize again. Note how the variability has decreased.
 mothur > summary.seqs(fasta=current, count=current)
 Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.count_table as input file for the count parameter.
 Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.fasta as input file for the fasta parameter.
@@ -234,6 +247,9 @@ It took 145 secs to summarize 3201307 sequences.
 Output File Names:
  /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.summary
 
+
+####################################################################################
+BIG STEP  This one may take a while
 mothur > pcr.seqs(oligos=oligosPrimers.txt, fasta=silva.bacteria.fasta)
 
 It took 4 secs to screen 14956 sequences.
@@ -243,7 +259,8 @@ Output File Names:
 /home/sdunn/mothur/NBC16s/data/silva.bacteria.bad.accnos
 /home/sdunn/mothur/NBC16s/data/silva.bacteria.scrap.pcr.fasta
 
-
+#######################################################################################
+#ANOTHER BIG STEP.  We are aligning our seuqneces to our reference.  Go get some coffee/lunch.
 mothur > align.seqs(fasta=nbc16s.trim.contigs.good.unique.fasta,reference=silva.bacteria.pcr.fasta, flip=TRUE)
 
 It took 3912 secs to align 2416793 sequences.
@@ -256,6 +273,8 @@ Output File Names:
 /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.align.report
 /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.flip.accnos
 
+
+## Sumarize what just happened.
 mothur > summary.seqs(fasta=current, count=current)
 Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.count_table as input file for the count parameter.
 Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.align as input file for the fasta parameter.
@@ -278,6 +297,9 @@ It took 201 secs to summarize 3201307 sequences.
 
 Output File Names:
  /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.summary
+ 
+ 
+## Screenign again, this one takes a bit.  NOtice the start and end values match what is in the summary table above. 
 screen.seqs(fasta=current,  count=current, summary= nbc16s.trim.contigs.good.unique.summary, start=13862, end=23444, maxhomop=8)
 
 It took 230 secs to screen 2416793 sequences, removed 9729.
@@ -299,6 +321,8 @@ Output File Names:
 
 
 It took 341 secs to screen 2416793 sequences.
+
+##Filter our screened seqs
 filter.seqs(fasta=current, vertical=T, trump=.)
 
 It took 74 secs to filter 2407064 sequences.
@@ -313,6 +337,10 @@ Number of sequences used to construct filter: 2407064
 Output File Names:
 /home/sdunn/mothur/NBC16s/data/nbc16s.filter
 /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.fasta
+
+
+
+### Retain only unique sequences
 unique.seqs(fasta=current, count=current)
 2407064 956568
 
@@ -320,6 +348,9 @@ Output File Names:
 /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.count_table
 /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.fasta
 
+
+
+### Summairze whats happened.  note consistencies
 Summary.seqs()
 Using 56 processors.
 [WARNING]: This command can take a namefile and you did not provide one. The current namefile is /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.names which seems to match /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.fasta.
@@ -340,7 +371,11 @@ It took 5 secs to summarize 956568 sequences.
 Output File Names:
  /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.summary
 
-pre.cluster(fasta=current, count=current, diffs=2)
+
+
+##########################################################################################################
+#BIG STEP.  CLustering is how we say a set of similar seuqneces are one "species".  Pre-clustering greatly saves on computing time.
+mothur>pre.cluster(fasta=current, count=current, diffs=2)
 
 Total number of sequences before pre.cluster was 26478.
 pre.cluster removed 14976 sequences.
@@ -426,14 +461,16 @@ Output File Names:
 /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.SDKC1.map
 /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.SDKC2.map
 /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.SDKC3.map
-chimera.uchime(fasta=current,count=current, dereplicate=t)
+
+## Identify chimeras
+ mothur> chimera.uchime(fasta=current,count=current, dereplicate=t)
 
 Output File Names:
 /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.pick.count_table
 /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.chimeras
 /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.accnos
-remove.seqs(fasta=current, accnos=current)
 
+## Remove chimeras
 mothur > remove.seqs(fasta=current, accnos=current)
 Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.accnos as input file for the accnos parameter.
 Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.fasta as input file for the fasta parameter.
@@ -443,6 +480,8 @@ Removed 99127 sequences from your fasta file.
 Output File Names:
 /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.fasta
 
+
+##SUmmarize whats happened
 mothur > summary.seqs()
 Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.fasta as input file for the fasta parameter.
 
@@ -464,6 +503,10 @@ It took 1 secs to summarize 314037 sequences.
 
 Output File Names:
  /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.summary
+
+
+#####################################################################################################################
+#BIG STEP.  note we have to use imported files....have you done this?
 classify.seqs(fasta=current, count=current ,reference=trainset9_032012.pds.fasta, taxonomy=trainset9_032012.pds.tax, cutoff=80)
 
 It took 98 secs to classify 314037 sequences.
@@ -476,6 +519,8 @@ Output File Names:
 /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.pds.wang.taxonomy
 /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.pds.wang.tax.summary
 
+
+## Remove undesirables
 remove.lineage(fasta=current, count=current, taxonomy=current, taxon=Chloroplast-Mitochondira-unknown-Archaea-Eukaryota)
 
 Using /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.pick.count_table as input file for the count parameter.
@@ -490,6 +535,8 @@ Output File Names:
 /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.pick.fasta
 /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.count_table
 
+
+## check where we are before proceeding further
 mothur > get.current()
 
 Current RAM usage: 32.5835 Gigabytes. Total Ram: 251.795 Gigabytes.
@@ -516,14 +563,16 @@ Current working directory: /home/sdunn/mothur/
 Output File Names:
 /home/sdunn/mothur/NBC16s/data/current_files.summary
 
-
+## We are making copies and renaming key files in the next few commands.  Recognize the cp command?
 mothur > system(cp /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.pick.fasta nbc16s.final.fasta)
 
-
+##more copying
 mothur > system(cp /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.count_table nbc16s.final.count_table)
 
-
+##more copying
 mothur > system(cp /home/sdunn/mothur/NBC16s/data/nbc16s.trim.contigs.good.unique.good.filter.unique.precluster.pick.pds.wang.pick.taxonomy nbc16s.final.taxonomy)
+
+## Counting sequences in each sample.  Find the sample with the LOWEST count that you want to retain.  Write down this number, we will use it for subsampling later.
 mothur > count.groups(count=nbc16s.final.count_table)
 Unable to open /home/sdunn/mothur/NBC16s/data/nbc16s.final.count_table. Trying input directory /home/sdunn/mothur/NBC16s/data/nbc16s.final.count_table.
 Unable to open /home/sdunn/mothur/NBC16s/data/nbc16s.final.count_table. Trying output directory /home/sdunn/mothur/NBC16s/data/nbc16s.final.count_table.
@@ -608,6 +657,9 @@ Total seqs: 2634951.
 
 Output File Names:
 /home/sdunn/mothur/NBC16s/data/nbc16s.final.count.summary
+
+
+##Sub sampling gives us EQUAL SIZED SAMPLES....this allows us to run stats without corrections in R and is an accepted practice.  This is a random selection, so if you re-ran this step you could concievably get different results.  The size argument is the number you wrote down.
 sub.sample(fasta=nbc16s.final.fasta, count=nbc16s.final.count_table, taxonomy=nbc16s.final.taxonomy, persample=t, size=27166)
 
 
@@ -631,8 +683,10 @@ Output File Names:
 /home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.taxonomy
 /home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.fasta
 
+###########################################################################################################################
 PREPARING FOR ANALYSIS
-Uses taxonomic information to split the sequences into bins and cluster within each bin (assigning sequences to OTUs). Taxlevel=4 refers to order. 
+##Uses taxonomic information to split the sequences into bins and cluster within each bin (assigning sequences to OTUs). Taxlevel=4 refers to order. This is a long one....go get dinner and a beer.
+
 
 cluster.split(fasta= nbc16s.final.subsample.fasta, count= nbc16s.final.subsample.count_table, taxonomy= nbc16s.final.subsample.taxonomy, splitmethod=classify, taxlevel=4, cutoff=0.03, processors=56)
 
@@ -660,20 +714,26 @@ Output File Names:
 /home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.dist
 /home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.list
 /home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.sensspec
+
+
+
+## Now that we have clustered sequences we want to make lists of what is shared where.  This is where any mistakes come to light.
 make.shared(list=nbc16s.final.subsample.opti_mcc.list, count= nbc16s.final.subsample.count_table, label=0.03)
 
 
 Output File Names:
 /home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.shared
-FInALLYY!!!!!
 
+## We have our OTUs, we know which samples they belong to, now lets give them names.
 mothur > classify.otu(list=nbc16s.final.subsample.opti_mcc.list, count= nbc16s.final.subsample.count_table, taxonomy= nbc16s.final.subsample.taxonomy, label=0.03)
 0.03    31065
 
 Output File Names:
 /home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.0.03.cons.taxonomy
 /home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.0.03.cons.tax.summary
-PHYLOTYPES
+
+##PHYLOTYPES
+##TBH I'm not sure why we do this step....its just how I learned how to do it!
 phylotype(taxonomy=nbc16s.final.subsample.taxonomy)
 
 1
@@ -688,12 +748,14 @@ Output File Names:
 /home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.tx.rabund
 /home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.tx.list
 
+## Make shared again
 make.shared(list= nbc16s.final.subsample.tx.list, count=nbc16s.final.subsample.count_table,label=1)
 1
 
 Output File Names:
 /home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.tx.shared
 
+##Classify
 classify.otu(list=current, count=current, taxonomy=current, label=1)
 
 Using /home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.count_table as input file for the count parameter.
@@ -705,7 +767,7 @@ Output File Names:
 /home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.tx.1.cons.taxonomy
 /home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.tx.1.cons.tax.summary
 
-
+## Summarize by sample and generate a coutn table to export to R
 mothur > summary.tax(taxonomy=nbc16s.final.subsample.taxonomy,count=nbc16s.final.subsample.count_table)
 
 It took 9 secs to create the summary file for 1684292 sequences.
@@ -713,334 +775,6 @@ It took 9 secs to create the summary file for 1684292 sequences.
 
 Output File Names:
 /home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.tax.summary
-NMDS
 
-mothur > dist.shared(shared=nbc16s.final.subsample.opti_mcc.shared, calc=braycurtis-thetayc)
-
-Using 56 processors.
-0.03
-1
-
-
-Output File Names:
-/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.braycurtis.0.03.lt.dist
-/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.thetayc.0.03.lt.dist
-
-mothur > nmds(phylip=nbc16s.final.subsample.opti_mcc.braycurtis.0.16.lt.dist,iters=100)
-Processing Dimension: 2
-1 100
-
-
-Number of dimensions:   2
-Lowest stress : 0.279091
-R-squared for configuration:    0.747613
-
-Output File Names:
-/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.braycurtis.0.03.lt.nmds.iters
-/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.braycurtis.0.03.lt.nmds.stress
-/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.braycurtis.0.03.lt.nmds.axes
-
-
-mothur > nmds(phylip=nbc16s.final.subsample.opti_mcc.thetayc.0.16.lt.dist,iters=100)
-
-
-Number of dimensions:   2
-Lowest stress : 0.216677
-R-squared for configuration:    0.814985
-
-Output File Names:
-/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.thetayc.0.03.lt.nmds.iters
-/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.thetayc.0.03.lt.nmds.stress
-/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.thetayc.0.03.lt.nmds.axes
-
-
-
-mothur > summary.single(shared=nbc16s.final.subsample.opti_mcc.shared, calc=sobs-chao-shannon-coverage)
-
-Processing group 170812HA
-
-0.16
-
-Processing group 170818FA
-
-0.16
-
-Processing group 170818FB
-
-0.16
-
-Processing group 170818FC
-
-0.16
-
-Processing group 170818HB
-
-0.16
-
-Processing group 170818HC
-
-0.16
-
-Processing group 170818SHA
-
-0.16
-
-Processing group 170818SHB
-
-0.16
-
-Processing group 170818SHC
-
-0.16
-
-Processing group 170818SOA
-
-0.16
-
-Processing group 170818SOB
-
-0.16
-
-Processing group 170818SOC
-
-0.16
-
-Processing group 170818TA
-
-0.16
-
-Processing group 170818TB
-
-0.16
-
-Processing group 170818TC
-
-0.16
-
-Processing group 170828CRB
-
-0.16
-
-Processing group 170828FA
-
-0.16
-
-Processing group 170828FB
-
-0.16
-
-Processing group 170828FC
-
-0.16
-
-Processing group 170828HA
-
-0.16
-
-Processing group 170828HC
-
-0.16
-
-Processing group 170828SHA
-
-0.16
-
-Processing group 170828SHB
-
-0.16
- 
-Processing group 170828SHC
-
-0.16
-
-Processing group 170828SOA
-
-0.16
-
-Processing group 170828SOB
-
-0.16
-
-Processing group 170828SOC
-
-0.16
-
-Processing group 170828TA
-
-0.16
-
-Processing group 170828TB
-
-0.16
-
-Processing group 170828TC
-
-0.16
-
-Processing group 170905FA
-
-0.16
-
-Processing group 170905FB
-
-0.16
-
-Processing group 170905FC
-
-0.16
-
-Processing group 170905HA
-
-0.16
-
-Processing group 170905HB
-
-0.16
-
-Processing group 170905HC
-
-0.16
-
-Processing group 170905SHA
-
-0.16
-
-Processing group 170905SHB
-
-0.16
-
-Processing group 170905SHC
-
-0.16
-
-Processing group 170905SOA
-
-0.16
-
-Processing group 170905SOB
-
-0.16
-
-Processing group 170905SOC
-
-0.16
-
-Processing group 170905TA
-
-0.16
-
-Processing group 170905TB
-
-0.16
-
-Processing group 170905TC
-
-0.16
-
-Processing group 170915FA
-
-0.16
-
-Processing group 170915FB
-
-0.16
-
-Processing group 170915FC
-
-0.16
-
-Processing group 170915HA
-
-0.16
-
-Processing group 170915HB
-
-0.16
-
-Processing group 170915SHA
-
-0.16
-
-Processing group 170915SHB
-
-0.16
-
-Processing group 170915SHC
-
-0.16
-
-Processing group 170915SOA
-
-0.16
-
-Processing group 170915SOB
-
-0.16
-
-Processing group 170915SOC
-
-0.16
-
-Processing group 170915TA
-
-0.16
-
-Processing group 170915TB
-
-0.16
-
-Processing group 170915TC
-
-0.16
-
-Processing group 180828HB
-
-0.16
-
-Output File Names:
-/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.groups.summary
-mothur > anosim(phylip=nbc16s.final.subsample.opti_mcc.braycurtis.0.16.lt.dist, design=NBC_design_clean.txt)
-
-comparison      R-value P-value
-170818-170828-170905-170915     0.565676        <0.001*
-170818-170828   -0.00809259     0.504
-170818-170905   0.793778        <0.001*
-170818-170915   0.881851        <0.001*
-170828-170905   0.719815        <0.001*
-170828-170915   0.772152        <0.001*
-170905-170915   0.300024        <0.001*
-
-Experiment-wise error rate: 0.05
-Pair-wise error rate (Bonferroni): 0.00833333
-If you have borderline P-values, you should try increasing the number of iterations
-
-Output File Names:
-/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.braycurtis.0.16.lt.anosim
-
-
-mothur > anosim(phylip=nbc16s.final.subsample.opti_mcc.braycurtis.0.16.lt.dist, design=NBC_design_clean_substrate.txt)
-
-comparison      R-value P-value
-CR-F-H-SH-SO-T  0.109508        0.003*
-CR-F    0.901515        0.087
-CR-H    0.957025        0.077
-CR-SH   0.876263        0.088
-CR-SO   0.813131        0.071
-CR-T    1       0.073
-F-H     0.0187203       0.272
-F-SH    0.0596065       0.146
-F-SO    0.0593434       0.154
-F-T     0.113584        0.068
-H-SH    0.0163411       0.312
-H-SO    0.0679314       0.126
-H-T     0.0664288       0.116
-SH-SO   -0.0608165      0.887
-SH-T    0.199021        0.014
-SO-T    0.196864        0.011
-
-Experiment-wise error rate: 0.05
-Pair-wise error rate (Bonferroni): 0.00333333
-If you have borderline P-values, you should try increasing the number of iterations
-
-Output File Names:
-/home/sdunn/mothur/NBC16s/data/nbc16s.final.subsample.opti_mcc.braycurtis.0.16.lt.anosim
+###############################################################################################################
+YOU'RE DONE!  Give yourself a high five.  The tax.summary table you just created is what you will download and place in your R directory.
